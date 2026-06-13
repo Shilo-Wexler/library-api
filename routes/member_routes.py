@@ -8,31 +8,31 @@ logger = get_logger(__name__)
 router = APIRouter()
 
 
-@router.post('/members', status_code=201)
+@router.post('', status_code=201)
 def add_member(body: CreateMember) -> GetMember:
     pass
 
 
-@router.get('/members')
+@router.get('')
 def get_members() -> list[GetMember]:
     pass
 
 
-@router.get('/members/{id}')
+@router.get('/{id}')
 def get_member(id: int) -> GetMember:
     pass
 
 
-@router.patch('/members/{id}')
+@router.patch('/{id}')
 def update_member(id: int, body: UpdateMember) -> GetMember:
     pass
 
 
-@router.patch('/members/{id}/deactivate')
+@router.patch('/{id}/deactivate')
 def deactivate_member(id: int) -> GetMember:
     pass
 
 
-@router.patch('/members/{id}/activate')
+@router.patch('/{id}/activate')
 def activate_member(id: int) -> GetMember:
     pass
