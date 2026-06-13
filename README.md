@@ -9,6 +9,7 @@ And also manages methods to conveniently receive the information through end poi
 library-api
 ├── README.md
 ├── database
+│   ├── __init__.py
 │   ├── book_db.py
 │   ├── connection_db.py
 │   ├── db_setup.py
@@ -18,10 +19,16 @@ library-api
 │   └── app.log
 ├── main.py
 ├── requirements.txt
-└── routes
-    ├── book_routes.py
-    ├── member_routes.py
-    └── report_routes.py
+├── routes
+│   ├── __init__.py
+│   ├── book_routes.py
+│   ├── member_routes.py
+│   └── report_routes.py
+└── schemas
+    ├── __init__.py
+    ├── books.py
+    └── members.py
+
 ```
 <br>
 

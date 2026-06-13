@@ -1,11 +1,9 @@
 from pydantic import BaseModel, EmailStr
 
 
-
 class BaseMember(BaseModel):
     name: str
     email: EmailStr
-
 
 
 class CreateMember(BaseMember):
