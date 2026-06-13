@@ -1,2 +1,2 @@
-from .books import AddBook, UpdateBook
-from .members import CreateMember, UpdateMember
+from .books import AddBook, UpdateBook, GetBook
+from .members import CreateMember, UpdateMember, GetMember
