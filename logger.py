@@ -1,8 +1,11 @@
+import os
 import logging
 from logging import Logger
 
 
 LOGS_FILE = 'logs/app.log'
+
+os.makedirs(os.path.dirname(LOGS_FILE), exist_ok=True)
 
 
 def get_logger(name: str) -> Logger:
