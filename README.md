@@ -8,19 +8,20 @@ And also manages methods to conveniently receive the information through end poi
 ```
 library-api
 ├── README.md
-├── app
-│   ├── database
-│   │   ├── book_db.py
-│   │   ├── connection_db.py
-│   │   └── member_db.py
-│   ├── logs
-│   │   └── app.log
-│   ├── main.py
-│   └── routes
-│       ├── book_routes.py
-│       ├── member_routes.py
-│       └── report_routes.py
-└── requirements.txt
+├── database
+│   ├── book_db.py
+│   ├── connection_db.py
+│   ├── db_setup.py
+│   └── member_db.py
+├── logger.py
+├── logs
+│   └── app.log
+├── main.py
+├── requirements.txt
+└── routes
+    ├── book_routes.py
+    ├── member_routes.py
+    └── report_routes.py
 ```
 <br>
 
@@ -130,11 +131,15 @@ docker exec -it library-api mysql -uroot -psecret
 ```
 python3 -m venv venv; source venv/bin/activate;
 ``` 
-4 - Installing the libraries required for the project to run properly:
+4 - Adding a file for logs output:
+```
+touch logs/app.log
+```
+5 - Installing the libraries required for the project to run properly:
 ```
 pip install -r requirements.txt  
 ```
-5 - Run the project:
+6 - Run the project:
 ```
 python3 app/main.py
 ```
