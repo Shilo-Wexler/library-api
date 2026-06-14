@@ -14,19 +14,18 @@ app = FastAPI(
     description="User book and report management system"
 )
 
-app.include_router(book_routes.router, 
+app.include_router(router=book_routes.router, 
     prefix='/books', tags=["Books"]
 )
-app.include_router(member_routes.router,
+app.include_router(router=member_routes.router,
     prefix='/members', tags=["Members"]
 )
-app.include_router(report_routes.router,
+app.include_router(router=report_routes.router,
     prefix='/reports', tags=["Reports"]
 )
 
 
-
-if __name__ == '__main__':
+def main() -> None:
     try:
         db_setup.setup_books_members_tables()
     except Exception as e:
@@ -37,3 +36,6 @@ if __name__ == '__main__':
         logger.critical("app failed to start: %s", e)
         sys.exit(1)
 
+
+if __name__ == '__main__':
+    main()
