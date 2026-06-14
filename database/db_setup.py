@@ -4,7 +4,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from database.queries import CREATE_BOOKS_TABLE, CREATE_MEMBERS_TABLE
-from database.connection_db import sqlConnection
+from database.connection_db import sql_connection
 from logger import get_logger
 
 logger = get_logger(__name__)
@@ -20,7 +20,7 @@ def setup_books_members_tables() -> None:
     logger.info("Starting to create the tables")
 
     try:
-        connection = sqlConnection
+        connection = sql_connection.connection.connect()
         cursor = connection.cursor()
 
         logger.info("Submitting the create command for a member table")
@@ -42,3 +42,5 @@ def setup_books_members_tables() -> None:
         if connection is not None:
             connection.close()
         logger.info("Connections closed")
+
+        
