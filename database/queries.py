@@ -8,7 +8,7 @@ CREATE_MEMBERS_TABLE = """
     is_active BOOLEAN NOT NULL DEFAULT TRUE,
     total_borrows INT NOT NULL DEFAULT 0
     )
-    """
+"""
 
 CREATE_BOOKS_TABLE = """
     CREATE TABLE IF NOT EXISTS books(
@@ -20,4 +20,4 @@ CREATE_BOOKS_TABLE = """
     borrowed_by_member_id INT DEFAULT NULL,
     FOREIGN KEY (borrowed_by_member_id) REFERENCES members(id) ON DELETE SET NULL
     )
-    """
+"""

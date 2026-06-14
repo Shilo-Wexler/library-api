@@ -28,8 +28,7 @@ app.include_router(report_routes.router,
 
 if __name__ == '__main__':
     try:
-        db_setup.create_books_table()
-        db_setup.create_members_table()
+        db_setup.setup_books_members_tables()
     except Exception as e:
         logger.critical("Table creation failure: %s", e)
     try:
