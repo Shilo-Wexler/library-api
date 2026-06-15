@@ -89,6 +89,46 @@ class MemberDB:
         finally:
             cursor.close()
             logger.info("Closing the cursor connection")
+    
+
+    @staticmethod
+    def get_top_member() -> dict:
+        logger.info("Starting the process of returns higest borrow member")
+        cursor = sql_connection.connection.cursor(dictionary=True)
+
+        try:
+            cursor.execute("SELECT * FROM members ORDER BY total_borrows DESC LIMIT 1")
+            result = cursor.fetchone()
+            logger.info(result)
+            return result
+        except Exception as e:
+            logger.error(e)
+            raise
+        finally:
+            cursor.close()
+            logger.info("Closing the cursor connection")
+    
+
+    @staticmethod
+    def count_active_members() -> int:
+        logger.info("Starting the process of returns higest borrow member")
+        cursor = sql_connection.connection.cursor(dictionary=True)
+
+        try:
+            cursor.execute("SELECT COUNT(*) AS actives FROM members WHERE is_active = TRUE")
+            return cursor.fetchone()
+        except Exception as e:
+            logger.error(e)
+            raise
+        finally:
+            cursor.close()
+            logger.info("Closing the cursor connection")
+    
+
+    
+
+
+    
 
 
 

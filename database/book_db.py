@@ -169,7 +169,7 @@ class BookDB:
         logger.info("Starting the book counting process")
         cursor = sql_connection.connection.cursor(dictionary=True)
         try:
-            cursor.execute("SELECT COUNT(*) AS amount_of_books FROM books WHERE is_available = %s", is_available)
+            cursor.execute("SELECT COUNT(*) AS amount_of_books FROM books WHERE is_available = %s", (is_available,))
             result = cursor.fetchone()
             logger.info("Quantity counting completed")
             return result['amount_of_books']
@@ -181,7 +181,19 @@ class BookDB:
             logger.info("Closing the cursor connection")
     
 
-    def count_by_genre()
+    def count_by_genre() -> dict:
+        logger.info("Starting the book counting  by genre process")
+        cursor = sql_connection.connection.cursor(dictionary=True)
+        try:
+            cursor.execute("SELECT genre, COUNT(*) as amount_of_books FROM books GROUP BY genre")
+            return cursor.fetchall()
+        except Exception as e:
+            logger.error(e)
+            raise
+        finally:
+            cursor.close()
+            logger.info("Closing the cursor connection")
+
         
 
 
