@@ -7,7 +7,7 @@ from logger import get_logger
 logger = get_logger(__name__)
 
 
-class BookDB():    
+class BookDB:    
     @staticmethod
     def add_new_book(data: dict) -> int:
         cursor = sql_connection.connection.cursor(dictionary=True)
@@ -86,17 +86,102 @@ class BookDB():
 
     @staticmethod
     def borrow_book(id: int, member_id: int) -> bool:
-        pass
+        logger.info("Starting the book borrowing process")
+        cursor = sql_connection.connection.cursor(dictionary=True)
+        try:
+            if BookDB.count_active_borrows_by_member(member_id) >=7:
+                raise IndexError("You have already borrowed 7 books.")
+            cursor.execute("""
+                UPDATE books SET is_available = FALSE, borrowed_by_member_id = %s
+                WHERE id = %s AND is_available = TRUE""", (member_id, id))
+            if not cursor.rowcount > 0:
+                raise ValueError("it is already borrowed.")
+            cursor.execute("UPDATE members SET total_borrows = total_borrows + 1 WHERE id = %s", (member_id,))
+            sql_connection.connection.commit()
+            return cursor.rowcount > 0
+        except Exception as e:
+            logger.error(e)
+            raise
+        finally:
+            cursor.close()
+            logger.info("Closing the cursor connection")
+    
+
+    @staticmethod
+    def count_active_borrows_by_member(member_id) -> int:
+        logger.info("Starting to count books borrowing by member process")
+        cursor = sql_connection.connection.cursor(dictionary=True)
+        try:
+            cursor.execute("""SELECT COUNT(*) AS amount_of_books 
+                FROM books WHERE borrowed_by_member_id = %s""", (member_id,))
+            result = cursor.fetchone()
+            return result['amount_of_books']
+        except Exception as e:
+            logger.error(e)
+            raise
+        finally:
+            cursor.close()
+            logger.info("Closing the cursor connection")
+    
 
 
 
     @staticmethod
     def return_book(id: int, member_id: int) -> bool:
-        pass
+        logger.info("Starting the book returning process")
+        cursor = sql_connection.connection.cursor(dictionary=True)
+        try:
+            cursor.execute("""
+                UPDATE books SET is_available = TRUE, borrowed_by_member_id = NULL 
+                WHERE id = %s AND is_available = FALSE AND borrowed_by_member_id = %s
+            """, (id, member_id)
+            )
+            sql_connection.connection.commit()
+            return cursor.rowcount > 0
+        except Exception as e:
+            logger.error(e)
+            raise
+        finally:
+            cursor.close()
+            logger.info("Closing the cursor connection")
+
     
-            
+
+    @staticmethod
+    def count_total_books() -> int:
+        logger.info("Starting the book counting process")
+        cursor = sql_connection.connection.cursor(dictionary=True)
+        try:
+            cursor.execute("SELECT COUNT(*) AS amount_of_books FROM books")
+            result = cursor.fetchone()
+            logger.info("Quantity counting completed")
+            return result['amount_of_books']
+        except Exception as e:
+            logger.error(e)
+            raise
+        finally:
+            cursor.close()
+            logger.info("Closing the cursor connection")
 
 
+    @staticmethod
+    def count_books_by_status(is_available: bool) -> int:
+        logger.info("Starting the book counting process")
+        cursor = sql_connection.connection.cursor(dictionary=True)
+        try:
+            cursor.execute("SELECT COUNT(*) AS amount_of_books FROM books WHERE is_available = %s", is_available)
+            result = cursor.fetchone()
+            logger.info("Quantity counting completed")
+            return result['amount_of_books']
+        except Exception as e:
+            logger.error(e)
+            raise
+        finally:
+            cursor.close()
+            logger.info("Closing the cursor connection")
+    
+
+    def count_by_genre()
         
 
 
