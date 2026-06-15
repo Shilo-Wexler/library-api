@@ -148,5 +148,5 @@ pip install -r requirements.txt
 ```
 6 - Run the project:
 ```
-python3 app/main.py
+python3 main.py
 ```
