@@ -20,8 +20,7 @@ def setup_books_members_tables() -> None:
     logger.info("Starting to create the tables")
 
     try:
-        connection = sql_connection.connection.connect()
-        cursor = connection.cursor()
+        cursor =  sql_connection.connection.cursor()
 
         logger.info("Submitting the create command for a member table")
         cursor.execute(CREATE_MEMBERS_TABLE)
@@ -30,7 +29,7 @@ def setup_books_members_tables() -> None:
         cursor.execute(CREATE_BOOKS_TABLE)
         logger.info("The books table was created successfully.")
 
-        connection.commit()
+        sql_connection.connection.commit()
 
     except Exception as e:
         logger.error("Table creation failed: %s", e)
